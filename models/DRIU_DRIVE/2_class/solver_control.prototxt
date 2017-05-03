@@ -1,0 +1,23 @@
+train_net: "train.prototxt"
+display: 1
+lr_policy: "step"
+stepsize: 10000
+
+# Due to the lack of data, the learning rate is set to a very small number (lr = 10−8)
+base_lr: 1e-8
+# high momentum
+momentum: 0.9
+iter_size: 1
+max_iter: 20000
+weight_decay: 0.0002
+gamma: 0.9
+#solver_mode: CPU
+
+snapshot: 10000
+snapshot_prefix: ""
+
+# 2 Class Model
+# [artery+overlap, vein+overlap]
+# transplanted weights from layer: new-score-weighting
+# to new-score-weighting_av for only artery and vein: indices (0,1)
+# trained on University of Lincoln ground truth (no overlap class)
