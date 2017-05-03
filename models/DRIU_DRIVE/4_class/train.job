@@ -1,0 +1,45 @@
+#!/bin/bash
+#SBATCH -N 1
+#SBATCH -p GPU-shared
+#SBATCH --gres=gpu:k80:1
+#SBATCH -t 10:00:00
+
+set -x
+
+module load python/2.7.11_gcc_np1.11
+module load cuda
+module load boost/1.60.0_py2.7.11 leveldb scikit
+module load caffe/git_2c34393f
+pip install --user pillow
+pip install --user scikit-image
+
+ORIGIN_DIR=`pwd`
+MODEL="4_class"
+WEIGHTS=train_start.caffemodel
+IMAGES_DIR=../../../Images/DRIVE/train
+PYTHON_DIR=../../../python/rvsc
+
+# setup working directory
+mkdir $SCRATCH/$MODEL
+
+# copy model files
+cp *.prototxt ModelLayers4Class.py $PYTHON_DIR/DenseLabelInputLayer.py $WEIGHTS $SCRATCH/$MODEL
+cp -r $IMAGES_DIR $SCRATCH/$MODEL
+
+# train
+cd $SCRATCH/$MODEL
+export PYTHONPATH=$CAFFE_PYTHONPATH:$SCRATCH/$MODEL:.
+caffe train -solver=solver.prototxt -weights=$WEIGHTS 2>&1| tee caffeTrain.log
+echo "Finished training"
+
+# copy output to persistent storage
+echo "Copying output files to origin"
+mkdir $ORIGIN_DIR
+rm $WEIGHTS
+cp *.caffemodel *.solverstate caffeTrain.log $ORIGIN_DIR
+cd $ORIGIN_DIR
+
+# clean up
+echo "Cleaning up scratch"
+rm -r $SCRATCH/$MODEL
+echo "ALL DONE!"
