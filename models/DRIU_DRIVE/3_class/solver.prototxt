@@ -1,0 +1,22 @@
+train_net: "train.prototxt"
+display: 1
+lr_policy: "step"
+stepsize: 10000
+
+# Due to the lack of data, the learning rate is set to a very small number (lr = 10−8)
+base_lr: 1e-8
+# high momentum
+momentum: 0.9
+iter_size: 1
+max_iter: 20000
+weight_decay: 0.0002
+gamma: 0.9
+#solver_mode: CPU
+
+snapshot: 10000
+snapshot_prefix: ""
+
+# 3 Class Model
+# artery (label 1), vein (label 2), and overlap (label 3). background (label 0) is ignored in loss calculation
+# new-score-weighting_av layer is gaussian init'd 
+# the output sigmoid from testing should be masked by a foreground/background segmentation
