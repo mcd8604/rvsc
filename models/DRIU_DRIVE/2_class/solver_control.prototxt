@@ -14,9 +14,9 @@ gamma: 0.9
 #solver_mode: CPU
 
 snapshot: 10000
-snapshot_prefix: ""
+snapshot_prefix: "control_"
 
-# 2 Class Model
+# 2 Class Model - Overlap Control
 # [artery+overlap, vein+overlap]
 # transplanted weights from layer: new-score-weighting
 # to new-score-weighting_av for only artery and vein: indices (0,1)

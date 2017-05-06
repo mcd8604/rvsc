@@ -14,7 +14,7 @@ gamma: 0.9
 #solver_mode: CPU
 
 snapshot: 10000
-snapshot_prefix: ""
+snapshot_prefix: "aug_"
 
 # 2 Class Model - Augmented Data
 # [artery+overlap, vein+overlap]
