@@ -1,4 +1,4 @@
-#RVSC - Retinal Vessel Segmentation and Classification
+# RVSC - Retinal Vessel Segmentation and Classification
 
 Caffe models can be trained, tested, and evaluated as described in the respective README files:  
 - [4-Class Model](models/DRIU_DRIVE/4_class/README.md)
